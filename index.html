@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Card Maker</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         /* Base and Layout Styles */
@@ -40,6 +41,7 @@
         }
 
         /* Form Section Styles */
+        .form-section select,
         .form-section input[type="text"] {
             width: 100%;
             padding: 1rem;
@@ -50,6 +52,16 @@
             color: #EAEAEA;
             font-size: 1rem;
             box-sizing: border-box;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+        .form-section select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
         }
 
         .form-section input::placeholder {
@@ -93,7 +105,7 @@
         }
 
         .file-input-wrapper input[type="file"] {
-            display: none; /* Menyembunyikan input file asli */
+            display: none;
         }
 
         /* Button Styles */
@@ -131,71 +143,138 @@
             animation: fadeIn 1s forwards;
             padding-top: 2rem;
         }
-
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Card Styles (Glassmorphism Effect) */
-        .profile-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 25px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            width: 320px;
-            min-height: 420px;
-            margin-left: auto;
-            margin-right: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s ease;
-        }
-        .profile-card.download-ready {
-            background: #1e1e1e;
-            backdrop-filter: none;
-            border: none;
-        }
-        .profile-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
 
-        /* Profile Image Styles */
-        .profile-picture {
-            width: 130px;
-            height: 130px;
+        /* === Card Template 1 (Futuristic) === */
+        #card-template-1 {
+            background-color: #0d0d0d;
+            border: 2px solid #00FFFF;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), inset 0 0 15px rgba(0, 255, 255, 0.3);
+            width: 350px;
+            padding: 2rem;
+            text-align: left;
+            margin: auto;
+            position: relative;
+        }
+        #card-template-1::before {
+            content: "PROFILE";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0d0d0d;
+            padding: 0 1rem;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 700;
+            color: #00FFFF;
+            border: 2px solid #00FFFF;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00FFFF;
+        }
+        .card-1-photo-frame {
+            border: 2px solid #00FFFF;
+            box-shadow: 0 0 10px #00FFFF;
+            border-radius: 15px;
+            padding: 10px;
+            margin: auto;
+            width: fit-content;
+            margin-bottom: 1.5rem;
+        }
+        .card-1-photo-frame img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        #card-template-1 h2 {
+            font-size: 2.2rem;
+            font-family: 'Roboto Mono', monospace;
+            text-align: center;
+            color: #00FFFF;
+            text-shadow: 0 0 10px #00FFFF;
+            margin-bottom: 1.5rem;
+        }
+        #card-template-1 .card-info-list p {
+            font-size: 1rem;
+            margin: 0.7rem 0;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .card-1-signature {
+            border-top: 2px dashed #444;
+            padding-top: 1rem;
+            text-align: center;
+        }
+        
+        /* === Card Template 2 (Clean) === */
+        #card-template-2 {
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 320px;
+            margin: auto;
+        }
+        #card-template-2 .profile-picture {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #F06595;
-            margin-bottom: 1.2rem;
-            box-shadow: 0 0 15px rgba(240, 101, 149, 0.6);
-            animation: glow 3s infinite alternate;
+            border: 4px solid #F06595;
+            margin-bottom: 1.5rem;
         }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 10px rgba(240,101,149,0.5); }
-            to { box-shadow: 0 0 20px rgba(240,101,149,0.9); }
-        }
-
-        .profile-card h2 {
-            font-size: 1.9rem;
-            font-weight: 600;
-            margin-bottom: 0.6rem;
+        #card-template-2 h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
             color: #fff;
         }
-
-        .profile-card p {
-            font-size: 1rem;
-            color: #CFCFCF;
-            margin: 0.4rem 0;
+        #card-template-2 p {
+            color: #bbb;
+            margin: 0.5rem 0;
         }
-        
+
+        /* === Card Template 3 (Minimalist) === */
+        #card-template-3 {
+            background-image: linear-gradient(135deg, #FF6B6B, #F06595);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            width: 300px;
+            margin: auto;
+        }
+        #card-template-3 .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            margin-bottom: 1.5rem;
+        }
+        #card-template-3 h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        #card-template-3 p {
+            font-size: 1rem;
+            margin: 0.3rem 0;
+        }
+
+        /* Utility classes */
+        .hidden {
+            display: none;
+        }
+        .visible {
+            display: block;
+        }
+
         /* Footer Styles */
         footer {
             margin-top: 2rem;
@@ -221,12 +300,21 @@
 
     <div id="form-input" class="container form-section">
         <h1>Photo Card Maker</h1>
-        <input type="text" id="input-name" placeholder="Nama Lengkap">
-        <input type="text" id="input-age" placeholder="Usia">
-        <input type="text" id="input-job" placeholder="Pekerjaan">
-        <input type="text" id="input-status" placeholder="Status">
-        <input type="text" id="input-hobby" placeholder="Hobi">
         
+        <select id="card-type-select" onchange="toggleInputs()">
+            <option value="1">Template 1 (Futuristik)</option>
+            <option value="2">Template 2 (Minimalist)</option>
+            <option value="3">Template 3 (Gradient)</option>
+        </select>
+
+        <input type="text" id="input-name" class="card-type-1 card-type-2 card-type-3" placeholder="Nama Lengkap">
+        <input type="text" id="input-age" class="card-type-1 card-type-2 card-type-3" placeholder="Usia">
+        <input type="text" id="input-status" class="card-type-1" placeholder="Status">
+        <input type="text" id="input-height" class="card-type-1 card-type-2 card-type-3" placeholder="Tinggi Badan">
+        <input type="text" id="input-hobby" class="card-type-1 card-type-2 card-type-3" placeholder="Hobi">
+        <input type="text" id="input-skill" class="card-type-1" placeholder="Keahlian">
+        <input type="text" id="input-job" class="card-type-2 card-type-3 hidden" placeholder="Pekerjaan">
+
         <div class="file-input-wrapper">
             <label for="input-file">Pilih File</label>
             <input type="file" id="input-file" accept="image/*">
@@ -237,14 +325,39 @@
     </div>
 
     <div id="card-result" class="result-section">
-        <div id="photo-card-container" class="profile-card">
-            <img id="output-photo" class="profile-picture" src="" alt="Foto Profil">
-            <h2 id="output-name"></h2>
-            <p id="output-age"></p>
-            <p id="output-job"></p>
-            <p id="output-status"></p>
-            <p id="output-hobby"></p>
+        <div id="card-template-1" class="profile-card hidden">
+            <div class="card-1-photo-frame">
+                <img id="output-photo-1" src="" alt="Foto Profil">
+            </div>
+            <h2 id="output-name-1"></h2>
+            <div class="card-info-list">
+                <p id="output-age-1"></p>
+                <p id="output-status-1"></p>
+                <p id="output-height-1"></p>
+                <p id="output-hobby-1"></p>
+                <p id="output-skill-1"></p>
+            </div>
+            <div class="card-1-signature">SIGNATURE</div>
         </div>
+
+        <div id="card-template-2" class="profile-card hidden">
+            <img id="output-photo-2" class="profile-picture" src="" alt="Foto Profil">
+            <h2 id="output-name-2"></h2>
+            <p id="output-age-2"></p>
+            <p id="output-job-2"></p>
+            <p id="output-height-2"></p>
+            <p id="output-hobby-2"></p>
+        </div>
+
+        <div id="card-template-3" class="profile-card hidden">
+            <img id="output-photo-3" class="profile-picture" src="" alt="Foto Profil">
+            <h2 id="output-name-3"></h2>
+            <p id="output-age-3"></p>
+            <p id="output-job-3"></p>
+            <p id="output-height-3"></p>
+            <p id="output-hobby-3"></p>
+        </div>
+
         <div class="btn-group">
             <button class="primary-btn" onclick="downloadCard()">Download</button>
             <button class="primary-btn" onclick="goBack()">Kembali</button>
@@ -257,59 +370,102 @@
     </footer>
 
 <script>
-    function goBack() {
-        document.getElementById('form-input').style.display = 'block';
-        document.getElementById('card-result').style.display = 'none';
-    }
-
-    const formSection = document.getElementById('form-input');
-    const resultSection = document.getElementById('card-result');
-    const photoCardContainer = document.getElementById('photo-card-container');
-    
     // Event listener untuk memperbarui nama file
     document.getElementById('input-file').addEventListener('change', function(e) {
         const fileName = e.target.files[0] ? e.target.files[0].name : 'Tidak ada file yang dipilih';
         document.getElementById('file-name').textContent = fileName;
     });
 
-    function generateCard() {
-        const name = document.getElementById('input-name').value;
-        const age = document.getElementById('input-age').value;
-        const job = document.getElementById('input-job').value;
-        const status = document.getElementById('input-status').value;
-        const hobby = document.getElementById('input-hobby').value;
+    function toggleInputs() {
+        const selectedType = document.getElementById('card-type-select').value;
+        const allInputs = document.querySelectorAll('.form-section input[type="text"]');
+        
+        allInputs.forEach(input => {
+            if (input.classList.contains(`card-type-${selectedType}`)) {
+                input.classList.remove('hidden');
+            } else {
+                input.classList.add('hidden');
+            }
+        });
+    }
+
+    // Panggil fungsi ini saat halaman dimuat pertama kali untuk menyembunyikan input yang tidak perlu
+    document.addEventListener('DOMContentLoaded', toggleInputs);
+
+    function goBack() {
+        document.getElementById('form-input').style.display = 'block';
+        document.getElementById('card-result').style.display = 'none';
+        document.querySelectorAll('.profile-card').forEach(card => card.classList.add('hidden'));
+    }
+
+    async function generateCard() {
+        const selectedType = document.getElementById('card-type-select').value;
+        let cardData = {};
+
+        // Collect data based on selected card type
+        if (selectedType === '1') {
+            cardData = {
+                name: document.getElementById('input-name').value,
+                age: document.getElementById('input-age').value,
+                status: document.getElementById('input-status').value,
+                height: document.getElementById('input-height').value,
+                hobby: document.getElementById('input-hobby').value,
+                skill: document.getElementById('input-skill').value,
+            };
+        } else if (selectedType === '2' || selectedType === '3') {
+            cardData = {
+                name: document.getElementById('input-name').value,
+                age: document.getElementById('input-age').value,
+                job: document.getElementById('input-job').value,
+                height: document.getElementById('input-height').value,
+                hobby: document.getElementById('input-hobby').value,
+            };
+        }
+
         const file = document.getElementById('input-file').files[0];
 
-        if (!name || !age || !job || !status || !hobby || !file) {
+        // Validation
+        const requiredFields = Object.values(cardData);
+        if (requiredFields.some(field => !field) || !file) {
             alert('Tolong isi semua data dan unggah foto!');
             return;
         }
 
-        document.getElementById('output-name').textContent = name;
-        document.getElementById('output-age').textContent = `Usia: ${age}`;
-        document.getElementById('output-job').textContent = `Pekerjaan: ${job}`;
-        document.getElementById('output-status').textContent = `Status: ${status}`;
-        document.getElementById('output-hobby').textContent = `Hobi: ${hobby}`;
+        // Fill the chosen template
+        const photoReader = new FileReader();
+        photoReader.onload = function(e) {
+            // Find and fill the correct card template
+            const cardTemplate = document.getElementById(`card-template-${selectedType}`);
+            cardTemplate.querySelector('img').src = e.target.result;
+            cardTemplate.querySelector('h2').textContent = cardData.name;
 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('output-photo').src = e.target.result;
+            if (selectedType === '1') {
+                document.getElementById('output-age-1').textContent = `Umur: ${cardData.age}`;
+                document.getElementById('output-status-1').textContent = `Status: ${cardData.status}`;
+                document.getElementById('output-height-1').textContent = `Tinggi Badan: ${cardData.height}`;
+                document.getElementById('output-hobby-1').textContent = `Hobi: ${cardData.hobby}`;
+                document.getElementById('output-skill-1').textContent = `Keahlian: ${cardData.skill}`;
+            } else if (selectedType === '2' || selectedType === '3') {
+                document.getElementById(`output-age-${selectedType}`).textContent = `Umur: ${cardData.age}`;
+                document.getElementById(`output-job-${selectedType}`).textContent = `Pekerjaan: ${cardData.job}`;
+                document.getElementById(`output-height-${selectedType}`).textContent = `Tinggi Badan: ${cardData.height}`;
+                document.getElementById(`output-hobby-${selectedType}`).textContent = `Hobi: ${cardData.hobby}`;
+            }
         };
-        reader.readAsDataURL(file);
+        photoReader.readAsDataURL(file);
 
-        formSection.style.display = 'none';
-        resultSection.style.display = 'block';
+        // Hide form and show result
+        document.getElementById('form-input').style.display = 'none';
+        document.getElementById('card-result').style.display = 'block';
+        document.getElementById(`card-template-${selectedType}`).classList.remove('hidden');
     }
 
     async function downloadCard() {
-        // Prepare card for download (remove problematic effects)
-        photoCardContainer.classList.add('download-ready');
+        const currentCardId = document.querySelector('.profile-card:not(.hidden)').id;
+        const currentCard = document.getElementById(currentCardId);
         
-        const canvas = await html2canvas(photoCardContainer);
+        const canvas = await html2canvas(currentCard);
         
-        // Restore card to original state
-        photoCardContainer.classList.remove('download-ready');
-
         const link = document.createElement('a');
         link.href = canvas.toDataURL('image/png');
         link.download = 'photo-card.png';
