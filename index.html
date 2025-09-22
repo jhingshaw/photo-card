@@ -7,16 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* CSS untuk styling dan layout */
+        /* Base and Layout Styles */
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #121212;
             color: #EAEAEA;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 2rem 0;
+            box-sizing: border-box;
         }
 
         .container {
@@ -27,6 +30,7 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
+            margin-bottom: 2rem; /* Added space for footer */
         }
 
         h1 {
@@ -35,6 +39,7 @@
             color: #EAEAEA;
         }
 
+        /* Form Section Styles */
         .form-section input[type="text"],
         .form-section input[type="file"] {
             width: 100%;
@@ -66,6 +71,7 @@
             margin-right: 1rem;
         }
 
+        /* Button Styles */
         button.primary-btn {
             width: 100%;
             padding: 1.2rem;
@@ -84,9 +90,19 @@
             box-shadow: 0 5px 15px rgba(240, 101, 149, 0.4);
         }
 
-        /* Styling halaman hasil */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-group button {
+            flex: 1;
+        }
+
+        /* Result Section Styles */
         .result-section {
-            display: none; /* Sembunyikan secara default */
+            display: none;
             animation: fadeIn 1s forwards;
             padding-top: 2rem;
         }
@@ -95,70 +111,86 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        /* Card Styles (Glassmorphism Effect) */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.05); /* Latar belakang tembus pandang */
+            backdrop-filter: blur(12px); /* Efek blur utama */
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Border transparan */
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            width: 320px;
+            min-height: 420px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        .profile-card.download-ready {
+            background: #1e1e1e; /* Solid color for download */
+            backdrop-filter: none;
+            border: none;
+        }
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
 
-    .profile-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255,255,255,0.15);
-        border-radius: 25px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        width: 320px;
-        min-height: 420px;
-        margin-left: auto;
-        margin-right: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: transform 0.3s ease;
-    }
-    .profile-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    }
+        /* Profile Image Styles */
+        .profile-picture {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #F06595;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 0 15px rgba(240, 101, 149, 0.6);
+            animation: glow 3s infinite alternate;
+        }
 
-    .profile-picture {
-        width: 130px;
-        height: 130px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 5px solid #F06595;
-        margin-bottom: 1.2rem;
-        box-shadow: 0 0 15px rgba(240, 101, 149, 0.6);
-        animation: glow 3s infinite alternate;
-    }
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(240,101,149,0.5); }
+            to { box-shadow: 0 0 20px rgba(240,101,149,0.9); }
+        }
 
-    @keyframes glow {
-        from { box-shadow: 0 0 10px rgba(240,101,149,0.5); }
-        to { box-shadow: 0 0 20px rgba(240,101,149,0.9); }
-    }
+        .profile-card h2 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: #fff;
+        }
 
-    .profile-card h2 {
-        font-size: 1.9rem;
-        font-weight: 600;
-        margin-bottom: 0.6rem;
-        color: #fff;
-    }
+        .profile-card p {
+            font-size: 1rem;
+            color: #CFCFCF;
+            margin: 0.4rem 0;
+        }
+        
+        /* Footer Styles */
+        footer {
+            margin-top: auto; /* Push to the bottom */
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
 
-    .profile-card p {
-        font-size: 1rem;
-        color: #CFCFCF;
-        margin: 0.4rem 0;
-    }
+        footer a {
+            color: #F06595;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
 
-    /* Tombol tambahan */
-    .btn-group {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-    }
-
-    .btn-group button {
-        flex: 1;
-    }
-</style>
+        footer a:hover {
+            color: #FF6B6B;
+        }
+    </style>
 </head>
 <body>
 
@@ -187,6 +219,11 @@
             <button class="primary-btn" onclick="goBack()">Kembali</button>
         </div>
     </div>
+    
+    <footer>
+        <p>&copy; 2025 | Dibuat oleh Programmer Handal</p>
+        <p>Lihat karya lainnya di <a href="https://www.youtube.com/channel/UCG0W8gE22e-N4LzL3-iN6aQ" target="_blank">YouTube</a></p>
+    </footer>
 
 <script>
     function goBack() {
@@ -228,7 +265,14 @@
     }
 
     async function downloadCard() {
+        // Prepare card for download (remove problematic effects)
+        photoCardContainer.classList.add('download-ready');
+        
         const canvas = await html2canvas(photoCardContainer);
+        
+        // Restore card to original state
+        photoCardContainer.classList.remove('download-ready');
+
         const link = document.createElement('a');
         link.href = canvas.toDataURL('image/png');
         link.download = 'photo-card.png';
