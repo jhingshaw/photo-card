@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* Base and Layout Styles */
         body {
@@ -19,8 +20,50 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 2rem 1.5rem;
+            padding: 2rem 1.5rem 2rem 6rem; /* Menambahkan padding kiri untuk navigasi */
             box-sizing: border-box;
+        }
+
+        /* === Navigation Styles === */
+        nav {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            z-index: 1000; /* Memastikan navigasi selalu di atas konten lain */
+            background-color: #1e1e1e;
+            border-right: 1px solid #333;
+        }
+
+        .nav-js-text {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00FFFF;
+            text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF;
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        
+        .social-links a {
+            color: #EAEAEA;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #00FFFF;
+            transform: scale(1.1);
         }
 
         .container {
@@ -283,20 +326,18 @@
             font-size: 0.9rem;
             color: #555;
         }
-
-        footer a {
-            color: #F06595;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: #FF6B6B;
-        }
     </style>
 </head>
 <body>
+
+    <nav>
+        <div class="nav-js-text">JS</div>
+        <div class="social-links">
+            <a href="https://www.youtube.com/channel/UCG0W8gE22e-N4LzL3-iN6aQ" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@your-tiktok-handle" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://github.com/your-github-handle" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </nav>
 
     <div id="form-input" class="container form-section">
         <h1>Photo Card Maker</h1>
@@ -366,7 +407,6 @@
     
     <footer>
         <p>&copy; 2025 | Dibuat oleh Programmer Handal</p>
-        <p>Lihat karya lainnya di <a href="https://www.youtube.com/channel/UCG0W8gE22e-N4LzL3-iN6aQ" target="_blank">YouTube</a></p>
     </footer>
 
 <script>
@@ -381,7 +421,8 @@
         const allInputs = document.querySelectorAll('.form-section input[type="text"]');
         
         allInputs.forEach(input => {
-            if (input.classList.contains(`card-type-${selectedType}`)) {
+            const inputClasses = input.className.split(' ');
+            if (inputClasses.includes(`card-type-${selectedType}`)) {
                 input.classList.remove('hidden');
             } else {
                 input.classList.add('hidden');
