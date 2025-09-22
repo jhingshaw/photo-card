@@ -84,18 +84,17 @@
 
         .nav-js-text {
             font-family: 'Roboto Mono', monospace;
-            font-size: 2rem;
+            font-size: 2.5rem; /* Lebih besar */
             font-weight: 700;
             color: #00FFFF;
             text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem; /* Menambah jarak */
         }
         
         .social-links {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            justify-content: center;
+            align-items: center;
             width: 100%;
         }
         
@@ -103,13 +102,33 @@
             color: #EAEAEA;
             font-size: 1.5rem;
             text-decoration: none;
+            padding: 1rem 0;
+            width: 100%;
             text-align: center;
             transition: color 0.3s ease, transform 0.3s ease;
+            border-bottom: 1px dashed #444; /* Pembatas */
         }
         
+        .social-links a:last-child {
+            border-bottom: none; /* Menghilangkan pembatas pada elemen terakhir */
+        }
+
         .social-links a:hover {
             color: #00FFFF;
             transform: scale(1.1);
+        }
+
+        .developer-link {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FF6B6B;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .developer-link:hover {
+            color: #F06595;
         }
 
         .container {
@@ -384,6 +403,7 @@
             <a href="https://www.tiktok.com/@your-tiktok-handle" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             <a href="https://github.com/your-github-handle" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
         </div>
+        <a href="https://www.youtube.com/channel/UCG0W8gE22e-N4LzL3-iN6aQ" target="_blank" class="developer-link">developer</a>
     </aside>
 
     <div id="backdrop" onclick="toggleSidebar()"></div>
