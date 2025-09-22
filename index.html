@@ -150,7 +150,8 @@
 
         /* Form Section Styles */
         .form-section select,
-        .form-section input[type="text"] {
+        .form-section input[type="text"],
+        .form-section input[type="number"] {
             width: 100%;
             padding: 1rem;
             margin-bottom: 1.5rem;
@@ -347,53 +348,53 @@
         }
 
         /* === Card Template 3 (Upgraded Minimalist) === */
-#card-template-3 {
-    background: linear-gradient(135deg, #FF6B6B, #F06595, #845EC2);
-    border-radius: 25px;
-    padding: 2.5rem;
-    text-align: center;
-    color: white;
-    width: 320px;
-    margin: auto;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(8px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+        #card-template-3 {
+            background: linear-gradient(135deg, #FF6B6B, #F06595, #845EC2);
+            border-radius: 25px;
+            padding: 2.5rem;
+            text-align: center;
+            color: white;
+            width: 320px;
+            margin: auto;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-#card-template-3:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-}
+        #card-template-3:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        }
 
-#card-template-3 .profile-picture {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid rgba(255, 255, 255, 0.9);
-    margin-bottom: 1.5rem;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-    transition: transform 0.3s ease;
-}
+        #card-template-3 .profile-picture {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
 
-#card-template-3:hover .profile-picture {
-    transform: scale(1.08) rotate(2deg);
-}
+        #card-template-3:hover .profile-picture {
+            transform: scale(1.08) rotate(2deg);
+        }
 
-#card-template-3 h2 {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-}
+        #card-template-3 h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        }
 
-#card-template-3 p {
-    font-size: 1rem;
-    margin: 0.4rem 0;
-    opacity: 0.9;
-    font-weight: 300;
-}
+        #card-template-3 p {
+            font-size: 1rem;
+            margin: 0.4rem 0;
+            opacity: 0.9;
+            font-weight: 300;
+        }
 
         /* Utility classes */
         .hidden {
@@ -438,9 +439,9 @@
         </select>
 
         <input type="text" id="input-name" class="card-type-1 card-type-2 card-type-3" placeholder="Nama Lengkap">
-        <input type="text" id="input-age" class="card-type-1 card-type-2 card-type-3" placeholder="Usia">
+        <input type="number" id="input-age" class="card-type-1 card-type-2 card-type-3" placeholder="Usia">
         <input type="text" id="input-status" class="card-type-1" placeholder="Status">
-        <input type="text" id="input-height" class="card-type-1 card-type-2 card-type-3" placeholder="Tinggi Badan">
+        <input type="number" id="input-height" class="card-type-1 card-type-2 card-type-3" placeholder="Tinggi Badan">
         <input type="text" id="input-hobby" class="card-type-1 card-type-2 card-type-3" placeholder="Hobi">
         <input type="text" id="input-skill" class="card-type-1" placeholder="Keahlian">
         <input type="text" id="input-job" class="card-type-2 card-type-3 hidden" placeholder="Pekerjaan">
@@ -513,7 +514,7 @@
 
     function toggleInputs() {
         const selectedType = document.getElementById('card-type-select').value;
-        const allInputs = document.querySelectorAll('.form-section input[type="text"]');
+        const allInputs = document.querySelectorAll('.form-section input[type="text"], .form-section input[type="number"]');
         
         allInputs.forEach(input => {
             const inputClasses = input.className.split(' ');
