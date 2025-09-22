@@ -18,12 +18,12 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 2rem 1.5rem; /* Menambahkan padding horizontal untuk responsivitas */
+            padding: 2rem 1.5rem;
             box-sizing: border-box;
         }
 
         .container {
-            width: 100%; /* Mengubah lebar agar sesuai dengan padding body */
+            width: 100%;
             max-width: 500px;
             background-color: #1E1E1E;
             padding: 2.5rem;
@@ -40,8 +40,7 @@
         }
 
         /* Form Section Styles */
-        .form-section input[type="text"],
-        .form-section input[type="file"] {
+        .form-section input[type="text"] {
             width: 100%;
             padding: 1rem;
             margin-bottom: 1.5rem;
@@ -57,18 +56,44 @@
             color: #888;
         }
 
-        .form-section input[type="file"] {
-            cursor: pointer;
+        /* Custom File Input Styles */
+        .file-input-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #2D2D2D;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem;
         }
 
-        .form-section input[type="file"]::-webkit-file-upload-button {
+        .file-input-wrapper label {
             background-image: linear-gradient(45deg, #FF6B6B, #F06595);
             color: white;
             padding: 0.8rem 1.5rem;
-            border: none;
             border-radius: 8px;
             cursor: pointer;
-            margin-right: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+
+        .file-input-wrapper label:hover {
+            transform: translateY(-2px);
+        }
+        
+        .file-input-wrapper span {
+            color: #EAEAEA;
+            flex-grow: 1;
+            text-align: right;
+            padding: 0 1rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            display: none; /* Menyembunyikan input file asli */
         }
 
         /* Button Styles */
@@ -173,7 +198,7 @@
         
         /* Footer Styles */
         footer {
-            margin-top: 2rem; /* Mengatur jarak dari konten di atasnya */
+            margin-top: 2rem;
             text-align: center;
             padding: 1rem 0;
             font-size: 0.9rem;
@@ -201,7 +226,13 @@
         <input type="text" id="input-job" placeholder="Pekerjaan">
         <input type="text" id="input-status" placeholder="Status">
         <input type="text" id="input-hobby" placeholder="Hobi">
-        <input type="file" id="input-file" accept="image/*">
+        
+        <div class="file-input-wrapper">
+            <label for="input-file">Pilih File</label>
+            <input type="file" id="input-file" accept="image/*">
+            <span id="file-name">Tidak ada file yang dipilih</span>
+        </div>
+        
         <button class="primary-btn" onclick="generateCard()">Buat Kartu</button>
     </div>
 
@@ -234,6 +265,12 @@
     const formSection = document.getElementById('form-input');
     const resultSection = document.getElementById('card-result');
     const photoCardContainer = document.getElementById('photo-card-container');
+    
+    // Event listener untuk memperbarui nama file
+    document.getElementById('input-file').addEventListener('change', function(e) {
+        const fileName = e.target.files[0] ? e.target.files[0].name : 'Tidak ada file yang dipilih';
+        document.getElementById('file-name').textContent = fileName;
+    });
 
     function generateCard() {
         const name = document.getElementById('input-name').value;
