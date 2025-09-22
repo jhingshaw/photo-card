@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Card Maker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* CSS untuk styling dan layout */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #EAEAEA;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background-color: #1E1E1E;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #EAEAEA;
+        }
+
+        .form-section input[type="text"],
+        .form-section input[type="file"] {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            background-color: #2D2D2D;
+            border: none;
+            border-radius: 10px;
+            color: #EAEAEA;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .form-section input::placeholder {
+            color: #888;
+        }
+
+        .form-section input[type="file"] {
+            cursor: pointer;
+        }
+
+        .form-section input[type="file"]::-webkit-file-upload-button {
+            background-image: linear-gradient(45deg, #FF6B6B, #F06595);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        button.primary-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background-image: linear-gradient(45deg, #FF6B6B, #F06595);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button.primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(240, 101, 149, 0.4);
+        }
+
+        /* Styling halaman hasil */
+        .result-section {
+            display: none; /* Sembunyikan secara default */
+            animation: fadeIn 1s forwards;
+            padding-top: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    .profile-card {
+        background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 25px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        width: 320px;
+        min-height: 420px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.3s ease;
+    }
+    .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+
+    .profile-picture {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid #F06595;
+        margin-bottom: 1.2rem;
+        box-shadow: 0 0 15px rgba(240, 101, 149, 0.6);
+        animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+        from { box-shadow: 0 0 10px rgba(240,101,149,0.5); }
+        to { box-shadow: 0 0 20px rgba(240,101,149,0.9); }
+    }
+
+    .profile-card h2 {
+        font-size: 1.9rem;
+        font-weight: 600;
+        margin-bottom: 0.6rem;
+        color: #fff;
+    }
+
+    .profile-card p {
+        font-size: 1rem;
+        color: #CFCFCF;
+        margin: 0.4rem 0;
+    }
+
+    /* Tombol tambahan */
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .btn-group button {
+        flex: 1;
+    }
+</style>
+
+<div id="card-result" class="result-section">
+    <div id="photo-card-container" class="profile-card">
+        <img id="output-photo" class="profile-picture" src="" alt="Foto Profil">
+        <h2 id="output-name"></h2>
+        <p id="output-age"></p>
+        <p id="output-job"></p>
+        <p id="output-status"></p>
+        <p id="output-hobby"></p>
+    </div>
+    <div class="btn-group">
+        <button class="primary-btn" onclick="downloadCard()">Download</button>
+        <button class="primary-btn" onclick="goBack()">Kembali</button>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        document.getElementById('form-input').style.display = 'block';
+        document.getElementById('card-result').style.display = 'none';
+    }
+
+    const formSection = document.getElementById('form-input');
+    const resultSection = document.getElementById('card-result');
+    const photoCardContainer = document.getElementById('photo-card-container');
+
+    function generateCard() {
+        const name = document.getElementById('input-name').value;
+        const age = document.getElementById('input-age').value;
+        const job = document.getElementById('input-job').value;
+        const status = document.getElementById('input-status').value;
+        const hobby = document.getElementById('input-hobby').value;
+        const file = document.getElementById('input-file').files[0];
+
+        if (!name || !age || !job || !status || !hobby || !file) {
+            alert('Tolong isi semua data dan unggah foto!');
+            return;
+        }
+
+        document.getElementById('output-name').textContent = name;
+        document.getElementById('output-age').textContent = `Usia: ${age}`;
+        document.getElementById('output-job').textContent = `Pekerjaan: ${job}`;
+        document.getElementById('output-status').textContent = `Status: ${status}`;
+        document.getElementById('output-hobby').textContent = `Hobi: ${hobby}`;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('output-photo').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        formSection.style.display = 'none';
+        resultSection.style.display = 'block';
+    }
+
+    async function downloadCard() {
+        const canvas = await html2canvas(photoCardContainer);
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'photo-card.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+</body>
+</html>
