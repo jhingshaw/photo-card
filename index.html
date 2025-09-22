@@ -20,23 +20,66 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 2rem 1.5rem 2rem 6rem; /* Menambahkan padding kiri untuk navigasi */
+            padding: 2rem 1.5rem;
             box-sizing: border-box;
+            position: relative;
         }
 
-        /* === Navigation Styles === */
-        nav {
+        /* === Navigation & Sidebar Styles === */
+        .menu-btn {
             position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: #EAEAEA;
+            cursor: pointer;
+            z-index: 1001;
+            transition: color 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            color: #F06595;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
+            height: 100%;
+            width: 250px;
+            background-color: #1e1e1e;
+            border-right: 1px solid #333;
+            padding: 3rem 1.5rem 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 1.5rem 1rem;
-            z-index: 1000; /* Memastikan navigasi selalu di atas konten lain */
-            background-color: #1e1e1e;
-            border-right: 1px solid #333;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        #backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        #backdrop.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .nav-js-text {
@@ -45,7 +88,7 @@
             font-weight: 700;
             color: #00FFFF;
             text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
         }
         
         .social-links {
@@ -53,11 +96,14 @@
             flex-direction: column;
             gap: 1.5rem;
             justify-content: center;
+            width: 100%;
         }
         
         .social-links a {
             color: #EAEAEA;
             font-size: 1.5rem;
+            text-decoration: none;
+            text-align: center;
             transition: color 0.3s ease, transform 0.3s ease;
         }
         
@@ -314,9 +360,6 @@
         .hidden {
             display: none;
         }
-        .visible {
-            display: block;
-        }
 
         /* Footer Styles */
         footer {
@@ -330,14 +373,20 @@
 </head>
 <body>
 
-    <nav>
+    <button class="menu-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <aside class="sidebar">
         <div class="nav-js-text">JS</div>
         <div class="social-links">
             <a href="https://www.youtube.com/channel/UCG0W8gE22e-N4LzL3-iN6aQ" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
             <a href="https://www.tiktok.com/@your-tiktok-handle" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             <a href="https://github.com/your-github-handle" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
         </div>
-    </nav>
+    </aside>
+
+    <div id="backdrop" onclick="toggleSidebar()"></div>
 
     <div id="form-input" class="container form-section">
         <h1>Photo Card Maker</h1>
@@ -410,7 +459,13 @@
     </footer>
 
 <script>
-    // Event listener untuk memperbarui nama file
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const backdrop = document.getElementById('backdrop');
+        sidebar.classList.toggle('active');
+        backdrop.classList.toggle('active');
+    }
+    
     document.getElementById('input-file').addEventListener('change', function(e) {
         const fileName = e.target.files[0] ? e.target.files[0].name : 'Tidak ada file yang dipilih';
         document.getElementById('file-name').textContent = fileName;
@@ -430,7 +485,6 @@
         });
     }
 
-    // Panggil fungsi ini saat halaman dimuat pertama kali untuk menyembunyikan input yang tidak perlu
     document.addEventListener('DOMContentLoaded', toggleInputs);
 
     function goBack() {
@@ -443,7 +497,6 @@
         const selectedType = document.getElementById('card-type-select').value;
         let cardData = {};
 
-        // Collect data based on selected card type
         if (selectedType === '1') {
             cardData = {
                 name: document.getElementById('input-name').value,
@@ -465,17 +518,14 @@
 
         const file = document.getElementById('input-file').files[0];
 
-        // Validation
         const requiredFields = Object.values(cardData);
         if (requiredFields.some(field => !field) || !file) {
             alert('Tolong isi semua data dan unggah foto!');
             return;
         }
 
-        // Fill the chosen template
         const photoReader = new FileReader();
         photoReader.onload = function(e) {
-            // Find and fill the correct card template
             const cardTemplate = document.getElementById(`card-template-${selectedType}`);
             cardTemplate.querySelector('img').src = e.target.result;
             cardTemplate.querySelector('h2').textContent = cardData.name;
@@ -495,7 +545,6 @@
         };
         photoReader.readAsDataURL(file);
 
-        // Hide form and show result
         document.getElementById('form-input').style.display = 'none';
         document.getElementById('card-result').style.display = 'block';
         document.getElementById(`card-template-${selectedType}`).classList.remove('hidden');
