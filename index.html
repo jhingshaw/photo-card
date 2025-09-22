@@ -159,21 +159,34 @@
         flex: 1;
     }
 </style>
+</head>
+<body>
 
-<div id="card-result" class="result-section">
-    <div id="photo-card-container" class="profile-card">
-        <img id="output-photo" class="profile-picture" src="" alt="Foto Profil">
-        <h2 id="output-name"></h2>
-        <p id="output-age"></p>
-        <p id="output-job"></p>
-        <p id="output-status"></p>
-        <p id="output-hobby"></p>
+    <div id="form-input" class="container form-section">
+        <h1>Photo Card Maker</h1>
+        <input type="text" id="input-name" placeholder="Nama Lengkap">
+        <input type="text" id="input-age" placeholder="Usia">
+        <input type="text" id="input-job" placeholder="Pekerjaan">
+        <input type="text" id="input-status" placeholder="Status">
+        <input type="text" id="input-hobby" placeholder="Hobi">
+        <input type="file" id="input-file" accept="image/*">
+        <button class="primary-btn" onclick="generateCard()">Buat Kartu</button>
     </div>
-    <div class="btn-group">
-        <button class="primary-btn" onclick="downloadCard()">Download</button>
-        <button class="primary-btn" onclick="goBack()">Kembali</button>
+
+    <div id="card-result" class="result-section">
+        <div id="photo-card-container" class="profile-card">
+            <img id="output-photo" class="profile-picture" src="" alt="Foto Profil">
+            <h2 id="output-name"></h2>
+            <p id="output-age"></p>
+            <p id="output-job"></p>
+            <p id="output-status"></p>
+            <p id="output-hobby"></p>
+        </div>
+        <div class="btn-group">
+            <button class="primary-btn" onclick="downloadCard()">Download</button>
+            <button class="primary-btn" onclick="goBack()">Kembali</button>
+        </div>
     </div>
-</div>
 
 <script>
     function goBack() {
